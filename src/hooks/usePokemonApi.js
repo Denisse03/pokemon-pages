@@ -8,18 +8,8 @@ export function PokemonProvider({ children }) {
     totalPokemonCount: 0,
     randomPokemon: [],
     favorites: [],
+    pokemonInfo: null,
   });
-
-  function displayFav() {
-    return pokemonState.favorites.map((element) => (
-      <PokemonCard
-        key={`poke-card-${element.id}`}
-        name={element.name}
-        img={element.img}
-        types={element.types}
-      />
-    ));
-  }
 
   async function getNumberOfPokemon() {
     const pokeResponse = await fetch(
@@ -64,13 +54,20 @@ export function PokemonProvider({ children }) {
       id: pokeData.id,
       img: pokeData.sprites.front_default,
       types: pokeData.types,
-      ability: pokeData.abilities,
     };
   }
 
   function favoritePokemon(pokeData) {
-    favorites.push(getPokemonQuickInfo(pokeData));
-    console.log(favorites);
+    const oldFav = pokemonState.favorites;
+    oldFav.push(pokeData);
+    setPokemonState({ ...pokemonState, favorites: oldFav });
+  }
+
+  async function viewPoke(pokeid) {
+    setPokemonState({
+      ...pokemonState,
+      pokemonInfo: { id: pokeid },
+    });
   }
 
   const pokemonValues = {
@@ -79,7 +76,7 @@ export function PokemonProvider({ children }) {
     getRandomPokemon,
     getPokemonQuickInfo,
     favoritePokemon,
-    displayFav,
+    viewPoke,
   };
 
   return (

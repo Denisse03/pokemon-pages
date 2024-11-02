@@ -21,9 +21,9 @@ export default function Home() {
     return (
       <PokemonCard
         key={`poke-card-${quickInfo.id}`}
+        id={quickInfo.id}
         name={quickInfo.name}
         img={quickInfo.img}
-        ability={quickInfo.abilities}
         types={quickInfo.types}
       />
     );
@@ -32,6 +32,7 @@ export default function Home() {
   return (
     <main className={homeStyles.mainContent}>
       <h1>POKEMON SHOWCASE</h1>
+
       <section>{randomPokemonListJsx}</section>
     </main>
   );

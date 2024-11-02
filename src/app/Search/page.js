@@ -3,27 +3,23 @@ import React, { useEffect, useState } from "react";
 import searchStyle from "@/app/Search/search.module.css";
 
 export default function Search() {
+  // State tracking pokemon data pulled from api
   const [pokemon, setPokemon] = useState({ sprites: {} });
 
-  const [pokemons, setPokemons] = useState({ sprites: {} });
+  const [pokemons, setPokemons] = useState({
+    pokemon_species: [],
+  });
 
-  const [pokemoned, setPokemoned] = useState({ sprites: {} });
+  const [pokemoned, setPokemoned] = useState({
+    pokemon_species: [],
+  });
 
+  // State tracking user search terms from input
   const [searchTerm, setSearchTerm] = useState("");
-
-  const [searchTerms, setSearchTerms] = useState("");
-
-  const [searchTermed, setSearchTermed] = useState("");
 
   const [eggSearch, setEggSearch] = useState("");
 
-  const [habSearch, sethabSearch] = useState("");
-
-  const [pokemonEncounters, setPokemonEncounters] = useState([]);
-
-  const [eggEncounters, seteggEncounters] = useState([]);
-
-  const [habEncounters, sethabEncounters] = useState([]);
+  const [habSearch, setHabSearch] = useState("");
 
   function changeSearchTerm(e) {
     setSearchTerm(e.currentTarget.value.toLowerCase());
@@ -34,7 +30,7 @@ export default function Search() {
   }
 
   function changehabSearch(e) {
-    sethabEncounters(e.currentTarget.value.toLowerCase());
+    setHabSearch(e.currentTarget.value.toLowerCase());
   }
 
   async function searchForPokemonByHab() {
@@ -43,34 +39,13 @@ export default function Search() {
         `https://pokeapi.co/api/v2/pokemon-habitat/${habSearch}`
       );
       const pokehabDataFormatted = await habData.json();
+      console.log(pokehabDataFormatted);
 
       setPokemoned(pokehabDataFormatted);
     } catch (error) {
-      setPokemoned({ name: habSearch, sprites: {} });
+      setPokemoned({ name: habSearch, pokemon_species: [] });
     }
   }
-
-  useEffect(
-    function () {
-      if (pokemoned.id) {
-        const habData = fetch(
-          `https://pokeapi.co/api/v2/pokemon-habitat/${pokemoned.id}`
-        )
-          .then((habData) => {
-            return habData.json();
-          })
-          .then((habEncounters) => {
-            sethabEncounters(habEncounters);
-          })
-          .catch((e) => {
-            sethabEncounters([]);
-          });
-      } else {
-        sethabEncounters([]);
-      }
-    },
-    [pokemoned]
-  );
 
   async function searchForPokemonByEgg() {
     try {
@@ -81,31 +56,9 @@ export default function Search() {
 
       setPokemons(pokeEggDataFormatted);
     } catch (error) {
-      setPokemons({ name: eggSearch, sprites: {} });
+      setPokemons({ name: eggSearch, pokemon_species: [] });
     }
   }
-
-  useEffect(
-    function () {
-      if (pokemons.id) {
-        const eggData = fetch(
-          `https://pokeapi.co/api/v2/egg-group/${pokemons.id}`
-        )
-          .then((eggData) => {
-            return eggData.json();
-          })
-          .then((eggEncounters) => {
-            seteggEncounters(eggEncounters);
-          })
-          .catch((e) => {
-            seteggEncounters([]);
-          });
-      } else {
-        seteggEncounters([]);
-      }
-    },
-    [pokemon]
-  );
 
   async function searchForPokemonByName() {
     try {
@@ -120,27 +73,9 @@ export default function Search() {
     }
   }
 
-  useEffect(
-    function () {
-      if (pokemon.id) {
-        const rawData = fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemon.id}/encounters`
-        )
-          .then((rawData) => {
-            return rawData.json();
-          })
-          .then((pokeEncounters) => {
-            setPokemonEncounters(pokeEncounters);
-          })
-          .catch((e) => {
-            setPokemonEncounters([]);
-          });
-      } else {
-        setPokemonEncounters([]);
-      }
-    },
-    [pokemon]
-  );
+  const pokeHabJSX = pokemoned.pokemon_species
+    .map((habObj) => habObj.name)
+    .join(", ");
 
   return (
     <main>
@@ -190,7 +125,7 @@ export default function Search() {
           />
           <input type="button" value="Search" onClick={searchForPokemonByHab} />
 
-          <h3>{pokemoned.name}</h3>
+          <p>{pokeHabJSX}</p>
         </div>
       </div>
     </main>
