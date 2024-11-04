@@ -17,6 +17,9 @@
     align-items: center;
     text-align: center;
     margin-bottom: 10px;
+    border: 2px solid black;
+    margin-left: 5px;
+   
 }
 
 .searchFeature p{
@@ -29,4 +32,12 @@
     margin-bottom: 10px;
     font-size: 13px;
 }
-
+ .searchFeature button{
+    background-color: white;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    justify-content: space-between;
+    margin-left: 20px;
+    font-style: italic;
+ }
