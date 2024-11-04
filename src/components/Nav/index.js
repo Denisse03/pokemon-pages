@@ -14,6 +14,9 @@ export default function Nav() {
         <li>
           <Link href="/Favorite">Favorites</Link>
         </li>
+        <li>
+          <Link href="/Pokemon">Pokemon</Link>
+        </li>
       </ul>
     </nav>
   );

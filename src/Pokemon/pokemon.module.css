@@ -2,6 +2,7 @@
     height: 400px;
     width: 300px;
     background-color: #B0ccd5;
+    margin-bottom: 50px;
 }
 
 .pokeCard img{
@@ -15,4 +16,14 @@
 
 .pokeCard div h4{
     font-size: 20px;
+}
+
+.pokeCard button{
+    background-color: white;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    justify-content: space-between;
+    margin-left: 20px;
+    font-style: italic;
 }
