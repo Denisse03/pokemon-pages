@@ -14,7 +14,11 @@ export default function Search() {
     pokemon_species: [],
   });
 
-  const [pokemonBerry, setPokemonBerry] = useState({ flavors: {} });
+  const [pokemonBerry, setPokemonBerry] = useState({
+    flavors: [],
+    firmness: {},
+    natural_gift_type: {},
+  });
 
   // State tracking user search terms from input
   const [searchTerm, setSearchTerm] = useState("");
@@ -81,17 +85,22 @@ export default function Search() {
     }
   }
 
-  // async function searchForPokemonByberry() {
-  //   try {
-  //     const berryData = await fetch(
-  //       `https://pokeapi.co/api/v2/berry/${berrySearch}`
-  //     );
-  //     const pokeDataFormatted = await berryData.json();
-  //     setPokemonBerry(pokeDataFormatted);
-  //   } catch (error) {
-  //     setPokemonBerry({ name: berrySearch, sprites: {} });
-  //   }
-  // }
+  async function searchForPokemonByberry() {
+    try {
+      const berryData = await fetch(
+        `https://pokeapi.co/api/v2/berry/${berrySearch}`
+      );
+      const pokeDataFormatted = await berryData.json();
+      setPokemonBerry(pokeDataFormatted);
+    } catch (error) {
+      setPokemonBerry({
+        name: berrySearch,
+        flavors: [],
+        firmness: {},
+        natural_gift_type: {},
+      });
+    }
+  }
 
   const pokeHabJSX = pokemoned.pokemon_species
     .map((habObj) => habObj.name)
@@ -99,6 +108,10 @@ export default function Search() {
 
   const pokeEggJSX = pokemons.pokemon_species
     .map((eggObj) => eggObj.name)
+    .join(", ");
+
+  const pokeberryJSX = pokemonBerry.flavors
+    .map((berryObj) => berryObj.flavor.name)
     .join(", ");
 
   return (
@@ -151,7 +164,9 @@ export default function Search() {
 
           <p>{pokeHabJSX}</p>
         </div>
-        {/* 
+
+        <h4>Honor Part</h4>
+
         <div>
           <input
             type="search"
@@ -167,10 +182,13 @@ export default function Search() {
             onClick={searchForPokemonByberry}
           />
 
-      
-          <p>{pokemonBerry.flavors}</p>
-         
-        </div> */}
+          <p>{pokemonBerry.name}</p>
+          <p>{pokemonBerry.firmness.name}</p>
+          <p> {pokemonBerry.size}</p>
+          <p>{pokemonBerry.natural_gift_type.name}</p>
+
+          <p> {pokeberryJSX}</p>
+        </div>
       </div>
     </main>
   );
