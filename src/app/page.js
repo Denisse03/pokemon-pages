@@ -4,7 +4,6 @@ import useBerryApi from "@/hooks/useBerryApi";
 import { useEffect } from "react";
 import homeStyles from "./page.module.css";
 import PokemonCard from "@/Pokemon/pokemonCard";
-
 import BerryCard from "@/Pokemon/berryCard";
 
 export default function Home() {

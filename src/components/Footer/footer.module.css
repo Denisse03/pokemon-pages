@@ -1,0 +1,11 @@
+.mainFooter{
+    height: 60px;
+    background-color: #c391ec;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    margin-top: 290px;
+
+}
